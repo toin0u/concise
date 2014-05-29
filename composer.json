@@ -1,0 +1,45 @@
+{
+    "name"        : "toin0u/concise",
+    "type"        : "library",
+    "description" : "Concise your urls via extern providers",
+    "keywords"    : ["url", "shortener", "shorten", "api"],
+    "homepage"    : "https://github.com/toin0u/concise",
+    "license"     : "MIT",
+
+    "authors" : [{
+        "name"     : "Antoine Corcy",
+        "email"    : "contact@sbin.dk",
+        "homepage" : "http://sbin.dk",
+        "role"     : "Developer"
+    }],
+
+    "support" : {
+        "issues" : "https://github.com/toin0u/concise/issues",
+        "source" : "https://github.com/toin0u/concise"
+    },
+
+    "require" : {
+        "php" : ">=5.3.3"
+    },
+
+    "require-dev" : {
+        "phpspec/phpspec" : "~2.0",
+        "guzzle/guzzle"   : "~3.9"
+    },
+
+    "config": {
+        "bin-dir": "bin"
+    },
+
+    "autoload" : {
+        "psr-4" : {
+            "Concise\\": "src"
+        }
+    },
+
+    "extra" : {
+        "branch-alias" : {
+            "dev-master" : "0.1-dev"
+        }
+    }
+}
