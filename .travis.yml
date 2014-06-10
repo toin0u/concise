@@ -15,7 +15,8 @@ matrix:
 
 before_script:
     - composer self-update
+    - composer require phpspec/phpspec:~2.0 --no-update
     - composer install --dev --prefer-dist --no-interaction
 
 script:
-    - ./bin/phpspec run -fpretty
+    - ./vendor/bin/phpspec run -fpretty
