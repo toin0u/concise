@@ -18,7 +18,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "egeloen/http-adapter": "0.6.*@dev"
     },
     "require-dev": {
         "guzzle/guzzle": "~3.9",
@@ -41,5 +42,7 @@
         "branch-alias": {
             "dev-master": "0.2-dev"
         }
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }
