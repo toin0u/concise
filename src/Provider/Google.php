@@ -16,7 +16,7 @@ use Concise\Adapter;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Google extends \Concise\Provider
+class Google extends AdapterAware
 {
     /**
      * @var string

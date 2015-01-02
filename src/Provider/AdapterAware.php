@@ -9,24 +9,26 @@
 * file that was distributed with this source code.
 */
 
-namespace Concise;
+namespace Concise\Provider;
+
+use Concise\Provider;
+use Concise\Adapter;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-interface Provider
+abstract class AdapterAware implements Provider
 {
     /**
-     * @param string $url
-     *
-     * @return string
+     * @var Adapter
      */
-    public function shorten($url);
+    protected $adapter;
 
     /**
-     * @param string $url
-     *
-     * @return string
+     * @param Adapter $adapter
      */
-    public function expand($url);
+    public function __construct(Adapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 }
