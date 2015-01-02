@@ -1,40 +1,41 @@
 {
-    "name"        : "toin0u/concise",
-    "type"        : "library",
-    "description" : "Concise your urls via extern providers",
-    "keywords"    : ["url", "shortener", "shorten", "api"],
-    "homepage"    : "https://github.com/toin0u/concise",
-    "license"     : "MIT",
-
-    "authors" : [{
-        "name"     : "Antoine Corcy",
-        "email"    : "contact@sbin.dk",
-        "homepage" : "http://sbin.dk",
-        "role"     : "Developer"
-    }],
-
-    "support" : {
-        "issues" : "https://github.com/toin0u/concise/issues",
-        "source" : "https://github.com/toin0u/concise"
+    "name": "toin0u/concise",
+    "description": "Concise your urls via extern providers",
+    "keywords": ["url", "shortener", "shorten", "api"],
+    "homepage": "https://github.com/toin0u/concise",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antoine Corcy",
+            "email": "contact@sbin.dk",
+            "homepage": "http://sbin.dk",
+            "role": "Developer"
+        },
+        {
+            "name": "Márk Sági-Kazár",
+            "email": "mark.sagikazar@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
     },
-
-    "require" : {
-        "php" : ">=5.3.3"
+    "require-dev": {
+        "guzzle/guzzle": "~3.9",
+        "phpspec/phpspec": "~2.1.0",
+        "henrikbjorn/phpspec-code-coverage" : "~1.0.0"
     },
-
-    "require-dev" : {
-        "guzzle/guzzle" : "~3.9"
-    },
-
-    "autoload" : {
-        "psr-4" : {
+    "autoload": {
+        "psr-4": {
             "Concise\\": "src"
         }
     },
-
-    "extra" : {
-        "branch-alias" : {
-            "dev-master" : "0.1-dev"
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
         }
     }
 }

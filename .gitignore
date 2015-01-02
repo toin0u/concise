@@ -1,2 +1,5 @@
-composer.lock
+bin/
+build/
 vendor/
+composer.lock
+phpspec.yml

@@ -1,0 +1,10 @@
+suites:
+  concise_suite:
+    namespace: Concise
+    psr4_prefix: Concise
+extensions:
+  - PhpSpec\Extension\CodeCoverageExtension
+formatter.name: pretty
+code_coverage:
+  format: clover
+  output: build/coverage.xml

@@ -1,0 +1,5 @@
+suites:
+  concise_suite:
+    namespace: Concise
+    psr4_prefix: Concise
+formatter.name: pretty
