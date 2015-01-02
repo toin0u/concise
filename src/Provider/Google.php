@@ -11,12 +11,12 @@
 
 namespace Concise\Provider;
 
-use Concise\Adapter;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Google extends AdapterAware
+class Google extends HttpAdapterAware
 {
     /**
      * @var string
@@ -24,22 +24,22 @@ class Google extends AdapterAware
     const ENDPOINT = 'https://www.googleapis.com/urlshortener/v1/url';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $apiKey;
 
     /**
      * @var array
      */
-    protected $header = array(
+    protected $headers = array(
         'Content-Type' => 'application/json'
     );
 
     /**
-     * @param Adapter      $adapter
-     * @param string|null  $apiKey
+     * @param HttpAdapterInterface $adapter
+     * @param string|null          $apiKey
      */
-    public function __construct(Adapter $adapter, $apiKey = null)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey = null)
     {
         parent::__construct($adapter);
 
@@ -56,8 +56,8 @@ class Google extends AdapterAware
             'longUrl' => $url,
         ));
 
-        $response = $this->adapter->post(self::ENDPOINT, $body, $this->header);
-        $response = json_decode($response);
+        $response = $this->adapter->post(self::ENDPOINT, $this->headers, $body);
+        $response = json_decode($response->getBody());
 
         return $response->id;
     }
@@ -72,8 +72,8 @@ class Google extends AdapterAware
             'shortUrl' => $url,
         )));
 
-        $response = $this->adapter->get($url, $this->header);
-        $response = json_decode($response);
+        $response = $this->adapter->get($url, $this->headers);
+        $response = json_decode($response->getBody());
 
         return $response->longUrl;
     }
