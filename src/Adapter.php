@@ -1,7 +1,7 @@
 <?php
 
 /*
-* This file is part of the concise project.
+* This file is part of the Concise package.
 *
 * (c) Antoine Corcy <contact@sbin.dk>
 *
@@ -17,19 +17,25 @@ namespace Concise;
 interface Adapter
 {
     /**
-     * @param  string           $path
-     * @param  array            $headers (optional).
-     * @throws RuntimeException
+     * Executes a get request
+     *
+     * @param string $path
+     * @param array  $headers (optional).
+     *
      * @return string
+     *
+     * @throws Exception\RuntimeException
      */
     public function get($path, array $headers = array());
 
     /**
-     * @param  string           $path
-     * @param  string           $body    (optional).
-     * @param  array            $headers (optional).
-     * @throws RuntimeException
+     * @param string $path
+     * @param string $body    (optional).
+     * @param array  $headers (optional).
+     *
      * @return string
+     *
+     * @throws Exception\RuntimeException
      */
     public function post($path, $body = null, array $headers = array());
 }

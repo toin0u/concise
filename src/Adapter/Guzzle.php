@@ -1,7 +1,7 @@
 <?php
 
 /*
-* This file is part of the concise project.
+* This file is part of the Concise package.
 *
 * (c) Antoine Corcy <contact@sbin.dk>
 *
@@ -25,7 +25,7 @@ class Guzzle implements \Concise\Adapter
     protected $client;
 
     /**
-     * @param Client $client (optional).
+     * @param Client|null $client
      */
     public function __construct(Client $client = null)
     {

@@ -1,7 +1,7 @@
 <?php
 
 /*
-* This file is part of the concise project.
+* This file is part of the Concise package.
 *
 * (c) Antoine Corcy <contact@sbin.dk>
 *
@@ -36,8 +36,8 @@ class Google extends \Concise\Provider
     );
 
     /**
-     * @param Adapter $adapter
-     * @param string  $apiKey  (optional).
+     * @param Adapter      $adapter
+     * @param string|null  $apiKey
      */
     public function __construct(Adapter $adapter, $apiKey = null)
     {
