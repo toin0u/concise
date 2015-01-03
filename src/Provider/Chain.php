@@ -23,7 +23,7 @@ class Chain implements Provider
     /**
      * @var Provider[]
      */
-    protected $providers = [];
+    protected $providers = array();
 
     /**
      * Adds a provider to the chain
@@ -50,7 +50,7 @@ class Chain implements Provider
      */
     public function clearProviders()
     {
-        $this->providers = [];
+        $this->providers = array();
     }
 
     /**
