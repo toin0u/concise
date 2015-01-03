@@ -75,7 +75,7 @@ use Concise\Provider\Cache;
 use Stash\Pool;
 
 $cache = new Cache(/* add a Provider instance here */, new Pool);
-$concise = new Concise($chain);
+$concise = new Concise($cache);
 ```
 
 
