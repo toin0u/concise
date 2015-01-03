@@ -1,67 +1,82 @@
-Concise
-=======
+# Concise
 
-Concise your urls via extern providers :)
-
-[![Build Status](https://secure.travis-ci.org/toin0u/concise.png)](http://travis-ci.org/toin0u/concise)
-[![Latest Stable Version](https://poser.pugx.org/toin0u/concise/v/stable.svg)](https://packagist.org/packages/toin0u/concise)
-[![Total Downloads](https://poser.pugx.org/toin0u/concise/downloads.svg)](https://packagist.org/packages/toin0u/concise)
+[![Latest Version](https://img.shields.io/github/release/toin0u/concise.svg?style=flat-square)](https://github.com/toin0u/concise/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Build Status](https://img.shields.io/travis/toin0u/concise/develop.svg?style=flat-square)](https://travis-ci.org/toin0u/concise)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/toin0u/concise.svg?style=flat-square)](https://scrutinizer-ci.com/g/toin0u/concise)
+[![Quality Score](https://img.shields.io/scrutinizer/g/toin0u/concise.svg?style=flat-square)](https://scrutinizer-ci.com/g/toin0u/concise)
+[![HHVM Status](https://img.shields.io/hhvm/toin0u/concise.svg?style=flat-square)](http://hhvm.h4cc.de/package/toin0u/concise)
+[![Total Downloads](https://img.shields.io/packagist/dt/toin0u/concise.svg?style=flat-square)](https://packagist.org/packages/toin0u/concise)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/2344d739-b954-4c9b-ae14-18bf9f095d7e/mini.png)](https://insight.sensiolabs.com/projects/2344d739-b954-4c9b-ae14-18bf9f095d7e)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/toin0u/concise/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/toin0u/concise/?branch=master)
 
-Installation
-------------
+**Concise your urls via extern providers :)**
 
-WIP
+## Install
 
-Usage
------
+Via Composer
 
-WIP
-
-Provider
---------
-
-WIP
-
-Support
--------
-
-[Please open an issues in github](https://github.com/toin0u/concise/issues)
+``` bash
+$ composer require toin0u/concise
+```
 
 
-Contributor Code of Conduct
----------------------------
+## Usage
 
-As contributors and maintainers of this project, we pledge to respect all people
-who contribute through reporting issues, posting feature requests, updating
-documentation, submitting pull requests or patches, and other activities.
+Simple example using `Google` provider:
 
-We are committed to making participation in this project a harassment-free
-experience for everyone, regardless of level of experience, gender, gender
-identity and expression, sexual orientation, disability, personal appearance,
-body size, race, age, or religion.
+``` php
+use Concise\Concise;
+use Concise\Provider\Google;
+use Ivory\HttpAdapter\GuzzleHttpAdapter;
 
-Examples of unacceptable behavior by participants include the use of sexual
-language or imagery, derogatory comments or personal attacks, trolling, public
-or private harassment, insults, or other unprofessional conduct.
+$concise = new Concise(new Google(new GuzzleHttpAdapter));
 
-Project maintainers have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct. Project maintainers who do not follow the
-Code of Conduct may be removed from the project team.
+// Returns the shortened URL
+$concise->shorten('http://any.url');
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by opening an issue or contacting one or more of the project
-maintainers.
-
-This Code of Conduct is adapted from the [Contributor
-Covenant](http:contributor-covenant.org), version 1.0.0, available at
-[http://contributor-covenant.org/version/1/0/0/](http://contributor-covenant.org/version/1/0/0/)
+// Returns the expanded URL
+$concise->expand('http://short.ly/1234');
+```
 
 
-License
--------
+### Provider chaining
 
-Consice is released under the MIT License. See the bundled
-[LICENSE](https://github.com/toin0u/concise/blob/master/LICENSE) file for details.
+You can shorten a URL using multiple providers at once.
+
+Make sure to add the `Provider`s in the chain in the SAME ORDER for both shortening and expanding. Expanding is automatically done in a reversed order.
+
+``` php
+use Concise\Concise;
+use Concise\Provider\Chain;
+
+$chain = new Chain;
+
+$chain->addProvider(/* add a Provider instance here */);
+$chain->addProvider(/* add another Provider instance here */);
+
+$concise = new Concise($chain);
+```
+
+
+## Testing
+
+``` bash
+$ phpspec run
+```
+
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+
+## Credits
+
+- [Antoine Corcy](https://github.com/toin0u)
+- [Márk Sági-Kazár](https://github.com/sagikazarmark)
+- [All Contributors](https://github.com/toin0u/concise/contributors)
+
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
