@@ -17,10 +17,14 @@ class CacheSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType('Concise\Provider\Cache');
-        $this->shouldHaveType('Concise\Provider');
     }
 
-    function it_should_allow_to_shorten_a_url(PoolInterface $pool, ItemInterface $item)
+    function it_is_a_provider()
+    {
+        $this->shouldImplement('Concise\Provider');
+    }
+
+    function it_shortens_a_url(PoolInterface $pool, ItemInterface $item)
     {
         $item->isMiss()->willReturn(false);
         $item->get()->willReturn('http://short.ly/1234');
@@ -29,7 +33,7 @@ class CacheSpec extends ObjectBehavior
         $this->shorten('http://any.url')->shouldReturn('http://short.ly/1234');
     }
 
-    function it_should_allow_to_expand_a_url(Provider $provider, PoolInterface $pool, ItemInterface $item)
+    function it_expands_a_url(Provider $provider, PoolInterface $pool, ItemInterface $item)
     {
         $item->isMiss()->willReturn(true);
         $item->set('http://any.url')->shouldBeCalled();

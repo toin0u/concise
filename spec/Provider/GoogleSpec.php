@@ -17,10 +17,14 @@ class GoogleSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType('Concise\Provider\Google');
+    }
+
+    function it_is_a_provider()
+    {
         $this->shouldImplement('Concise\Provider');
     }
 
-    function it_should_allow_to_shorten_a_url(HttpAdapterInterface $adapter, Response $response)
+    function it_shortens_a_url(HttpAdapterInterface $adapter, Response $response)
     {
         $response->getBody()->willReturn('{"id": "http://goo.gl/shortened"}');
         $adapter->post(Argument::type('string'), Argument::type('array'), Argument::type('string'))->willReturn($response);
@@ -28,7 +32,7 @@ class GoogleSpec extends ObjectBehavior
         $this->shorten('http://any.url')->shouldReturn("http://goo.gl/shortened");
     }
 
-    function it_should_allow_to_expand_a_url(HttpAdapterInterface $adapter, Response $response)
+    function it_expands_a_url(HttpAdapterInterface $adapter, Response $response)
     {
         $response->getBody()->willReturn('{"longUrl": "http://any.url"}');
         $adapter->get(Argument::type('string'), Argument::type('array'))->willReturn($response);
