@@ -1,13 +1,13 @@
 <?php
 
 /*
-* This file is part of the Concise package.
-*
-* (c) Antoine Corcy <contact@sbin.dk>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the Concise package.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Concise;
 
@@ -19,7 +19,7 @@ class Concise
     /**
      * Version
      */
-    const VERSION = '0.1-dev';
+    const VERSION = '0.2-dev';
 
     /**
      * @var Provider
