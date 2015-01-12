@@ -1,9 +1,9 @@
 {
     "name": "toin0u/concise",
     "description": "Concise your urls via extern providers",
+    "license": "MIT",
     "keywords": ["url", "shortener", "shorten", "api"],
     "homepage": "https://github.com/toin0u/concise",
-    "license": "MIT",
     "authors": [
         {
             "name": "Antoine Corcy",
