@@ -2,7 +2,7 @@
 
 [![Latest Version](https://img.shields.io/github/release/toin0u/concise.svg?style=flat-square)](https://github.com/toin0u/concise/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/toin0u/concise/master.svg?style=flat-square)](https://travis-ci.org/toin0u/concise)
+[![Build Status](https://img.shields.io/travis/toin0u/concise.svg?style=flat-square)](https://travis-ci.org/toin0u/concise)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/toin0u/concise.svg?style=flat-square)](https://scrutinizer-ci.com/g/toin0u/concise)
 [![Quality Score](https://img.shields.io/scrutinizer/g/toin0u/concise.svg?style=flat-square)](https://scrutinizer-ci.com/g/toin0u/concise)
 [![HHVM Status](https://img.shields.io/hhvm/toin0u/concise.svg?style=flat-square)](http://hhvm.h4cc.de/package/toin0u/concise)
