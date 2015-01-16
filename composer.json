@@ -23,8 +23,8 @@
     },
     "require-dev": {
         "tedivm/stash": "dev-master",
-        "phpspec/phpspec": "~2.1.0",
-        "henrikbjorn/phpspec-code-coverage" : "~1.0.0"
+        "phpspec/phpspec": "~2.1",
+        "henrikbjorn/phpspec-code-coverage" : "~1.0"
     },
     "suggest": {
         "tedivm/stash": "Used for caching URLs"
