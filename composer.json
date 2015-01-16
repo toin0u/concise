@@ -18,11 +18,10 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4.0",
         "egeloen/http-adapter": "0.6.*@dev"
     },
     "require-dev": {
-        "guzzle/guzzle": "~3.9",
         "tedivm/stash": "dev-master",
         "phpspec/phpspec": "~2.1.0",
         "henrikbjorn/phpspec-code-coverage" : "~1.0.0"
