@@ -31,9 +31,9 @@ class Google extends HttpAdapterAware
     /**
      * @var array
      */
-    protected $headers = array(
+    protected $headers = [
         'Content-Type' => 'application/json'
-    );
+    ];
 
     /**
      * @param HttpAdapterInterface $adapter
@@ -51,10 +51,10 @@ class Google extends HttpAdapterAware
      */
     public function shorten($url)
     {
-        $body = json_encode(array(
+        $body = json_encode([
             'key'     => $this->apiKey,
             'longUrl' => $url,
-        ));
+        ]);
 
         $response = $this->adapter->post(self::ENDPOINT, $this->headers, $body);
         $response = json_decode($response->getBody());
@@ -67,10 +67,10 @@ class Google extends HttpAdapterAware
      */
     public function expand($url)
     {
-        $url = sprintf('%s?%s', self::ENDPOINT, http_build_query(array(
+        $url = sprintf('%s?%s', self::ENDPOINT, http_build_query([
             'key'      => $this->apiKey,
             'shortUrl' => $url,
-        )));
+        ]));
 
         $response = $this->adapter->get($url, $this->headers);
         $response = json_decode($response->getBody());

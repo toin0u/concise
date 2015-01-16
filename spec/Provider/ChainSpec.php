@@ -20,9 +20,9 @@ class ChainSpec extends ObjectBehavior
     function it_accepts_a_provider(Provider $provider)
     {
         $this->addProvider($provider);
-        $this->getProviders()->shouldReturn(array($provider));
+        $this->getProviders()->shouldReturn([$provider]);
         $this->clearProviders();
-        $this->getProviders()->shouldReturn(array());
+        $this->getProviders()->shouldReturn([]);
     }
 
     function it_shortens_a_url(Provider $provider1, Provider $provider2)
