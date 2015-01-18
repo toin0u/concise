@@ -35,7 +35,7 @@ class GoogleSpec extends ObjectBehavior
     function it_expands_a_url(HttpAdapterInterface $adapter, Response $response)
     {
         $response->getBody()->willReturn('{"longUrl": "http://any.url"}');
-        $adapter->get(Argument::type('string'), Argument::type('array'))->willReturn($response);
+        $adapter->get(Argument::type('string'))->willReturn($response);
 
         $this->expand('http://goo.gl/shortened')->shouldReturn("http://any.url");
     }
