@@ -40,6 +40,12 @@ $concise->expand('http://short.ly/1234');
 
 For full list of available adapters check the official [documentation](https://github.com/egeloen/ivory-http-adapter/blob/master/doc/adapters.md).
 
+Currently supported providers:
+
+- Bitly
+- Google
+- Tinycc
+
 
 ### Provider chaining
 
