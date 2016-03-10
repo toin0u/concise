@@ -11,12 +11,14 @@
 
 namespace Concise\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Concise\Provider;
+use Http\Client\HttpClient;
+use Http\Message\RequestFactory;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Google extends HttpAdapterAware
+class Google implements Provider
 {
     /**
      * @var string
@@ -24,18 +26,29 @@ class Google extends HttpAdapterAware
     const ENDPOINT = 'https://www.googleapis.com/urlshortener/v1/url';
 
     /**
-     * @var string|null
+     * @var HttpClient
      */
-    protected $apiKey;
+    private $httpClient;
 
     /**
-     * @param HttpAdapterInterface $adapter
-     * @param string|null          $apiKey
+     * @var RequestFactory
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey = null)
-    {
-        parent::__construct($adapter);
+    private $requestFactory;
 
+    /**
+     * @var string|null
+     */
+    private $apiKey;
+
+    /**
+     * @param HttpClient     $httpClient
+     * @param RequestFactory $requestFactory
+     * @param string|null    $apiKey
+     */
+    public function __construct(HttpClient $httpClient, RequestFactory $requestFactory, $apiKey = null)
+    {
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
         $this->apiKey = $apiKey;
     }
 
@@ -51,8 +64,11 @@ class Google extends HttpAdapterAware
             'longUrl' => $url,
         ]);
 
-        $response = $this->adapter->post(self::ENDPOINT, $headers, $body);
-        $response = json_decode($response->getBody());
+        $request = $this->requestFactory->createRequest('POST', self::ENDPOINT, $headers, $body);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $response = json_decode((string) $response->getBody());
 
         return $response->id;
     }
@@ -67,8 +83,11 @@ class Google extends HttpAdapterAware
             'shortUrl' => $url,
         ]));
 
-        $response = $this->adapter->get($url);
-        $response = json_decode($response->getBody());
+        $request = $this->requestFactory->createRequest('GET', $url);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $response = json_decode((string) $response->getBody());
 
         return $response->longUrl;
     }

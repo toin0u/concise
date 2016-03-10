@@ -19,7 +19,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "egeloen/http-adapter": "0.6.*@dev"
+        "php-http/httplug": "^1.0",
+        "php-http/message-factory": "^1.0"
     },
     "require-dev": {
         "tedivm/stash": "dev-master",
@@ -27,6 +28,8 @@
         "henrikbjorn/phpspec-code-coverage" : "~1.0"
     },
     "suggest": {
+        "php-http/client-implementation": "An HTTP Client implementation",
+        "php-http/message": "Provides Message Factory implementations",
         "tedivm/stash": "Used for caching URLs"
     },
     "autoload": {

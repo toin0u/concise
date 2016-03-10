@@ -11,12 +11,14 @@
 
 namespace Concise\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Concise\Provider;
+use Http\Client\HttpClient;
+use Http\Message\RequestFactory;
 
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class Tinycc extends HttpAdapterAware
+class Tinycc implements Provider
 {
     /**
      * @var string
@@ -24,35 +26,27 @@ class Tinycc extends HttpAdapterAware
     const ENDPOINT = 'http://tiny.cc';
 
     /**
-     * @var string
-     */
-    protected $login;
-
-    /**
-     * @var string
-     */
-    protected $apiKey;
-
-    /**
      * @var array
      */
-    protected $defaultParams = [
+    private $params = [
         'c'       => 'rest_api',
         'version' => '2.0.3',
         'format'  => 'json',
     ];
 
     /**
-     * @param HttpAdapterInterface $adapter
-     * @param string               $login
-     * @param string               $apiKey
+     * @param string         $login
+     * @param string         $apiKey
+     * @param HttpClient     $httpClient
+     * @param RequestFactory $requestFactory
      */
-    public function __construct(HttpAdapterInterface $adapter, $login, $apiKey)
+    public function __construct($login, $apiKey, HttpClient $httpClient, RequestFactory $requestFactory)
     {
-        parent::__construct($adapter);
+        $this->params['login'] =  $login;
+        $this->params['apiKey'] = $apiKey;
 
-        $this->defaultParams['login'] = $this->login = $login;
-        $this->defaultParams['apiKey'] = $this->apiKey = $apiKey;
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -60,15 +54,18 @@ class Tinycc extends HttpAdapterAware
      */
     public function shorten($url)
     {
-        $params = array_merge($this->defaultParams, [
+        $params = array_merge($this->params, [
             'm'       => 'shorten',
             'longUrl' => trim($url),
         ]);
 
         $url = sprintf('%s?%s', self::ENDPOINT, http_build_query($params));
 
-        $response = $this->adapter->get($url);
-        $response = json_decode($response->getBody());
+        $request = $this->requestFactory->createRequest('GET', $url);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $response = json_decode((string) $response->getBody());
 
         return $response->results->short_url;
     }
@@ -78,15 +75,18 @@ class Tinycc extends HttpAdapterAware
      */
     public function expand($url)
     {
-        $params = array_merge($this->defaultParams, [
+        $params = array_merge($this->params, [
             'm'       => 'expand',
             'shortUrl' => trim($url),
         ]);
 
         $url = sprintf('%s?%s', self::ENDPOINT, http_build_query($params));
 
-        $response = $this->adapter->get($url);
-        $response = json_decode($response->getBody());
+        $request = $this->requestFactory->createRequest('GET', $url);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $response = json_decode((string) $response->getBody());
 
         return $response->results->longUrl;
     }
