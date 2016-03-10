@@ -19,15 +19,15 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "egeloen/http-adapter": "0.6.*@dev"
+        "egeloen/http-adapter": "0.6.*@dev",
+        "psr/cache": "^1.0"
     },
     "require-dev": {
-        "tedivm/stash": "dev-master",
         "phpspec/phpspec": "~2.1",
         "henrikbjorn/phpspec-code-coverage" : "~1.0"
     },
     "suggest": {
-        "tedivm/stash": "Used for caching URLs"
+        "psr/cache-implementation": "Used for caching URLs"
     },
     "autoload": {
         "psr-4": {

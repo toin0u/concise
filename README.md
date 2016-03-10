@@ -70,7 +70,7 @@ $concise = new Concise($chain);
 
 When working with lots of URLs it probably makes sense to cache already shortened/expanded URLs. This way you can avoid unnecessary HTTP requests.
 
-To use caching install [Stash](http://www.stashphp.com/) first:
+To use caching install a PSR-6 cache implementation, like [Stash](http://www.stashphp.com/):
 
 ``` bash
 $ composer require tedivm/stash

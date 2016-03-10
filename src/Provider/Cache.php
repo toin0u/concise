@@ -12,7 +12,7 @@
 namespace Concise\Provider;
 
 use Concise\Provider;
-use Stash\Interfaces\PoolInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Cache URLs
@@ -24,17 +24,17 @@ class Cache implements Provider
     /**
      * @var Provider
      */
-    protected $provider;
+    private $provider;
 
     /**
-     * @var PoolInterface
+     * @var CacheItemPoolInterface
      */
-    protected $pool;
+    private $pool;
 
     /**
      * @param Provider $provider
      */
-    public function __construct(Provider $provider, PoolInterface $pool)
+    public function __construct(Provider $provider, CacheItemPoolInterface $pool)
     {
         $this->provider = $provider;
         $this->pool = $pool;
@@ -45,7 +45,17 @@ class Cache implements Provider
      */
     public function shorten($url)
     {
-        return $this->transformUrl($url, 'shorten');
+        $item = $this->pool->getItem('shorten.'.md5($url));
+
+        $cachedUrl = $item->get();
+
+        if (false === $item->isHit()) {
+            $cachedUrl = $this->provider->shorten($url);
+
+            $item->set($cachedUrl);
+        }
+
+        return $cachedUrl;
     }
 
     /**
@@ -53,29 +63,16 @@ class Cache implements Provider
      */
     public function expand($url)
     {
-        return $this->transformUrl($url, 'expand');
-    }
+        $item = $this->pool->getItem('expand.'.md5($url));
 
-    /**
-     * Shorten or expand a URL checking it in the cache first
-     *
-     * @param string $url
-     * @param string $transformation
-     *
-     * @return string
-     */
-    protected function transformUrl($url, $transformation)
-    {
-        $cachedUrl = $this->pool->getItem(md5($url));
+        $cachedUrl = $item->get();
 
-        if ($cachedUrl->isMiss()) {
-            $url = $this->provider->$transformation($url);
+        if (false === $item->isHit()) {
+            $cachedUrl = $this->provider->expand($url);
 
-            $cachedUrl->set($url);
-        } else {
-            $url = $cachedUrl->get();
+            $item->set($cachedUrl);
         }
 
-        return $url;
+        return $cachedUrl;
     }
 }
