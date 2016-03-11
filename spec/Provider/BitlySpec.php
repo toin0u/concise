@@ -2,16 +2,18 @@
 
 namespace spec\Concise\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
-use Psr\Http\Message\IncomingResponseInterface as Response;
+use Http\Client\HttpClient;
+use Http\Message\RequestFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class BitlySpec extends ObjectBehavior
 {
-    function let(HttpAdapterInterface $adapter)
+    function let(HttpClient $httpClient, RequestFactory $requestFactory)
     {
-        $this->beConstructedWith($adapter, 'access_token');
+        $this->beConstructedWith('access_token', $httpClient, $requestFactory);
     }
 
     function it_is_initializable()
@@ -24,18 +26,46 @@ class BitlySpec extends ObjectBehavior
         $this->shouldImplement('Concise\Provider');
     }
 
-    function it_shortens_a_url(HttpAdapterInterface $adapter, Response $response)
-    {
-        $response->getBody()->willReturn('{"data": {"url": "http://bit.ly/shortened"}}');
-        $adapter->get(Argument::type('string'))->willReturn($response);
+    function it_shortens_a_url(
+        RequestFactory $requestFactory,
+        RequestInterface $request,
+        HttpClient $httpClient,
+        ResponseInterface $response,
+        StreamInterface $body
+    ) {
+        $requestFactory
+            ->createRequest(
+                'GET',
+                'https://api-ssl.bitly.com/v3/shorten?access_token=access_token&longUrl='.urlencode('http://any.url')
+            )
+            ->willReturn($request);
+        ;
+
+        $httpClient->sendRequest($request)->willReturn($response);
+        $response->getBody()->willReturn($body);
+        $body->__toString()->willReturn('{"data": {"url": "http://bit.ly/shortened"}}');
 
         $this->shorten('http://any.url')->shouldReturn("http://bit.ly/shortened");
     }
 
-    function it_expands_a_url(HttpAdapterInterface $adapter, Response $response)
-    {
-        $response->getBody()->willReturn('{"data": {"expand": [{"long_url": "http://any.url"}]}}');
-        $adapter->get(Argument::type('string'))->willReturn($response);
+    function it_expands_a_url(
+        RequestFactory $requestFactory,
+        RequestInterface $request,
+        HttpClient $httpClient,
+        ResponseInterface $response,
+        StreamInterface $body
+    ) {
+        $requestFactory
+            ->createRequest(
+                'GET',
+                'https://api-ssl.bitly.com/v3/expand?access_token=access_token&shortUrl='.urlencode('http://bit.ly/shortened')
+            )
+            ->willReturn($request);
+        ;
+
+        $httpClient->sendRequest($request)->willReturn($response);
+        $response->getBody()->willReturn($body);
+        $body->__toString()->willReturn('{"data": {"expand": [{"long_url": "http://any.url"}]}}');
 
         $this->expand('http://bit.ly/shortened')->shouldReturn("http://any.url");
     }

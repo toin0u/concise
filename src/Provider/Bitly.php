@@ -11,12 +11,14 @@
 
 namespace Concise\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Concise\Provider;
+use Http\Client\HttpClient;
+use Http\Message\RequestFactory;
 
 /**
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class Bitly extends HttpAdapterAware
+class Bitly implements Provider
 {
     /**
      * @var string
@@ -26,17 +28,28 @@ class Bitly extends HttpAdapterAware
     /**
      * @var string
      */
-    protected $accessToken;
+    private $accessToken;
 
     /**
-     * @param HttpAdapterInterface $adapter
-     * @param string               $accessToken
+     * @var HttpClient
      */
-    public function __construct(HttpAdapterInterface $adapter, $accessToken)
-    {
-        parent::__construct($adapter);
+    private $httpClient;
 
+    /**
+     * @var RequestFactory
+     */
+    private $requestFactory;
+
+    /**
+     * @param string         $accessToken
+     * @param HttpClient     $httpClient
+     * @param RequestFactory $requestFactory
+     */
+    public function __construct($accessToken, HttpClient $httpClient, RequestFactory $requestFactory)
+    {
         $this->accessToken = $accessToken;
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -49,8 +62,11 @@ class Bitly extends HttpAdapterAware
             'longUrl'      => trim($url),
         ]));
 
-        $response = $this->adapter->get($url);
-        $response = json_decode($response->getBody());
+        $request = $this->requestFactory->createRequest('GET', $url);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $response = json_decode((string) $response->getBody());
 
         return $response->data->url;
     }
@@ -65,8 +81,11 @@ class Bitly extends HttpAdapterAware
             'shortUrl'     => trim($url),
         ]));
 
-        $response = $this->adapter->get($url);
-        $response = json_decode($response->getBody());
+        $request = $this->requestFactory->createRequest('GET', $url);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $response = json_decode((string) $response->getBody());
 
         return $response->data->expand[0]->long_url;
     }
